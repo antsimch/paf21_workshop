@@ -45,9 +45,9 @@ public class RoomRepository {
         return template.queryForObject(findByIdSQL, BeanPropertyRowMapper.newInstance(Room.class), roomId);
     }
 
-    public boolean saveRoom(Room room) {
+    public Boolean saveRoom(Room room) {
 
-        boolean saved = template.execute(insertSQL, new PreparedStatementCallback<Boolean>() {
+        Boolean saved = template.execute(insertSQL, new PreparedStatementCallback<Boolean>() {
 
             @Override
             public Boolean doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {

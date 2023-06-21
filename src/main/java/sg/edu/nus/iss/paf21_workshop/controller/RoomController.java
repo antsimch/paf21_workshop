@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import sg.edu.nus.iss.paf21_workshop.exception.ResourceNotFoundException;
 import sg.edu.nus.iss.paf21_workshop.model.Room;
 import sg.edu.nus.iss.paf21_workshop.service.RoomService;
 
@@ -37,11 +38,7 @@ public class RoomController {
         List<Room> rooms = new ArrayList<>();
         rooms = roomService.getAllRooms();
 
-        if (rooms.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        } else {
-            return ResponseEntity.ok().body(rooms);
-        }
+        return ResponseEntity.ok().body(rooms);
     }
 
     @GetMapping(path = "/{roomId}")
@@ -49,7 +46,7 @@ public class RoomController {
         Room room = roomService.findRoomById(roomId);
 
         if (room == null) {
-            return ResponseEntity.notFound().build();
+            throw new ResourceNotFoundException("Room not found");
         } else {
             return ResponseEntity.ok().body(room);
         }
